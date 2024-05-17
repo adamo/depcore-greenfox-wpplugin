@@ -1,0 +1,69 @@
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+  box-sizing: border-box;
+  display: block;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.depcore-product-image img{
+  max-height: 500px;
+  width: auto;
+  display: block;
+  margin-inline:auto;
+}
+
+.cta-form{
+  padding: min(5%, 50px);
+  background-color: #f1f1f1;
+  margin-top: min(5%, 50px);
+  margin-bottom: min(5%, 50px);
+}
+.depcore-product-information{
+  list-style: none;
+  padding: 0;
+
+}
+.depcore-product-information li{margin: min(10px,5vh) 0;}
+
+.greenfox-product-template-default #qodef-page-outer{
+  margin-top: 0 !important;
+}
+.greenfox-product-template-default .qodef-page-title .qodef-m-content{
+  padding-top: 0 !important;
+}
+
+.greenfox-product-template-default #qodef-page-inner{
+  padding-top: 0;
+}
