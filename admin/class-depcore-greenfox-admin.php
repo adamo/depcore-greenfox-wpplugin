@@ -20,7 +20,8 @@
  * @subpackage Depcore_Greenfox/admin
  * @author     Depcore <biuro@depcore.pl>
  */
-class Depcore_Greenfox_Admin {
+class Depcore_Greenfox_Admin
+{
 
 	private $plugin_name;
 	private $prefix = 'depcore-';
@@ -53,21 +54,21 @@ class Depcore_Greenfox_Admin {
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
-	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/depcore-greenfox-admin.css', array(), $this->version, 'all' );
-
+	public function enqueue_styles()
+	{
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/depcore-greenfox-admin.css', array(), $this->version, 'all');
 	}
 
-	public function enqueue_scripts() {
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/depcore-greenfox-admin.js', array( 'jquery' ), $this->version, false );
-
+	public function enqueue_scripts()
+	{
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/depcore-greenfox-admin.js', array('jquery'), $this->version, false);
 	}
 
 	public function init_post_types()
@@ -76,7 +77,8 @@ class Depcore_Greenfox_Admin {
 		$this->register_product_category_taxonomy();
 	}
 
-	public function register_product_category_taxonomy(){
+	public function register_product_category_taxonomy()
+	{
 		$args = array(
 			'labels'      => $this->generate_taxonomy_labels('Product category', 'Product categories'),
 			'hierarchical'    => true,
@@ -93,10 +95,10 @@ class Depcore_Greenfox_Admin {
 			'query_var'     => true,
 		);
 		register_taxonomy('greenfox-product-category', array('greenfox-product'), $args);
-
 	}
 
-	public function register_product_post_type() {
+	public function register_product_post_type()
+	{
 		__('Product category', 'depcore-greenfox');
 		__('Greenfox product', 'depcore-greenfox');
 		__('Add new greenfox product', 'depcore-greenfox');
@@ -118,8 +120,6 @@ class Depcore_Greenfox_Admin {
 		);
 
 		register_post_type('greenfox-product', array_merge($args, $this->cpt_defaults));
-
-
 	}
 
 	protected function generate_labels($singular, $plural)
@@ -168,10 +168,11 @@ class Depcore_Greenfox_Admin {
 	public function init_metaboxes()
 	{
 
-		$metabox_groups =[
-			'Product information' => ['price', 'grammage','storage_method','shelf_life','type_of_pre-packaging','number_of_products_per_unit_package','type_of_packaging','number_of_products_per_package','ingredients_according_to_commission_regulation'],
-			'Nutritional information' => ['nutritional_value_per_100g_of_product', 'energy_value','fat','including_saturated_fatty_acids','carbohydrates','including_suggars','dietary_fiber','protein','salt'],
-			'Logistics information' => ['EAN_of_unit_package', 'EAN_of_bulk_package','dimensions_of_unit_package_cm','dimensions_of_bulk_package_cm','logistics_minimum','number_of_boxes_per_pallet','number_of_boxes_per_layer','number_of_layers_on_a_pallet','pallet_weight','pallet_dimensions_cm'],
+		__('Show all', 'depcore-greenfox');
+		$metabox_groups = [
+			'Product information' => ['price', 'grammage', 'storage_method', 'shelf_life', 'type_of_pre-packaging', 'number_of_products_per_unit_package', 'type_of_packaging', 'number_of_products_per_package', 'ingredients_according_to_commission_regulation'],
+			'Nutritional information' => ['nutritional_value_per_100g_of_product', 'energy_value', 'fat', 'including_saturated_fatty_acids', 'carbohydrates', 'including_suggars', 'dietary_fiber', 'protein', 'salt'],
+			'Logistics information' => ['EAN_of_unit_package', 'EAN_of_bulk_package', 'dimensions_of_unit_package_cm', 'dimensions_of_bulk_package_cm', 'logistics_minimum', 'number_of_boxes_per_pallet', 'number_of_boxes_per_layer', 'number_of_layers_on_a_pallet', 'pallet_weight', 'pallet_dimensions_cm'],
 		];
 
 		foreach ($metabox_groups as $group_name => $fields) {
@@ -213,10 +214,17 @@ class Depcore_Greenfox_Admin {
 		));
 
 		$cmb->add_field(array(
+			'id' => $this->prefix . 'cta_heading',
+			'name' => __('CTA heading', 'depcore-greenfox'),
+			'type' => 'text',
+			'desc' => __('Text for the CTA heading', 'depcore-greenfox'),
+		));
+
+		$cmb->add_field(array(
 			'id' => $this->prefix . 'cta_text',
 			'name' => __('CTA text', 'depcore-greenfox'),
-			'type' => 'text',
-			'desc' => __('Text for the CTA button', 'depcore-greenfox'),
+			'type' => 'textarea',
+			'desc' => __('Text for the CTA section', 'depcore-greenfox'),
 		));
 
 		// select contact form 7 which will be used for the CTA
@@ -227,7 +235,6 @@ class Depcore_Greenfox_Admin {
 			'options' => $this->get_contact_forms(),
 			'desc' => __('Select the form which will be used for the CTA', 'depcore-greenfox'),
 		));
-
 	}
 
 	protected function get_contact_forms()
@@ -244,9 +251,10 @@ class Depcore_Greenfox_Admin {
 		return $forms;
 	}
 
-	protected function create_metabox_group($label, $fields){
+	protected function create_metabox_group($label, $fields)
+	{
 		$cmb = new_cmb2_box(array(
-			'id' 			=> $this->prefix . $label.'_info',
+			'id' 			=> $this->prefix . $label . '_info',
 			'title'         => __($label, 'depcore-greenfox'),
 			'object_types'  => array('greenfox-product'),
 			'context'       => 'normal',
@@ -262,12 +270,10 @@ class Depcore_Greenfox_Admin {
 				'type' => 'text',
 			));
 		}
-
 	}
 
 	public static function create_cmb_name($field)
 	{
-		return  __(str_replace('_',' ', ucfirst($field)),'depcore-greenfox');
+		return  __(str_replace('_', ' ', ucfirst($field)), 'depcore-greenfox');
 	}
-
 }

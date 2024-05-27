@@ -16,12 +16,12 @@
 
     <button class="accordion"><?= __($name,'depcore-greenfox'); ?></button>
     <div class="panel">
-        <ul class='depcore-product-information'>
+        <ul class='depcore-product-information' <?= $this->map_schema_value($name) ?>>
             <?php foreach ($group as $metabox) : ?>
                 <?php $field = get_post_meta(get_the_ID(), $prefix.$metabox, true); ?>
                 <?php if ($field != '') : ?>
                 <li>
-                    <strong><?php echo Depcore_Greenfox_Admin::create_cmb_name($metabox) ?>:</strong> <?= $field ?>
+                    <strong><?php echo Depcore_Greenfox_Admin::create_cmb_name($metabox) ?>:</strong> <span <?= $this->map_schema_value($metabox)  ?>><?= $field ?></span>
                 </li>
                 <?php endif; ?>
             <?php endforeach ?>

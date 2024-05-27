@@ -122,6 +122,7 @@ class Depcore_Greenfox {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-depcore-greenfox-public.php';
 
+		// require_once plugin_dir_path( dirname( __FILE__ )) . '/elementor/Greenfox_Product_List_Widget.php';
 		$this->loader = new Depcore_Greenfox_Loader();
 
 	}
@@ -156,7 +157,6 @@ class Depcore_Greenfox {
 
 		$this->loader->add_action('init', $plugin_admin, 'init_post_types');
 		$this->loader->add_action('cmb2_admin_init', $plugin_admin, 'init_metaboxes');
-		// $this->loader->add_filter('cmb2-taxonomy_meta_boxes', $plugin_admin, 'register_term_meta_boxes');
 
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
@@ -176,9 +176,16 @@ class Depcore_Greenfox {
 		$plugin_public = new Depcore_Greenfox_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'init', $plugin_public, 'register_shortcodes' );
-
+		$this->loader->add_filter('wp_get_attachment_image_attributes', $plugin_public, 'add_itemprop_image', 10, 5);
+		// $this->loader->add_filter('get_the_title', $plugin_public, 'add_itemprop_name', 10, 1);
+		// $this->loader->add_filter('the_title', $plugin_public, 'add_itemprop_name', 10, 1);
+		$this->loader->add_filter('stal_filter_page_title_text', $plugin_public, 'add_itemprop_name', 10, 1);
+		$this->loader->add_action( 'template_redirect', $plugin_public, 'remove_wpseo' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'init', $plugin_public, 'register_greenfox_product_list_shortcode' );
+		// $this->loader->add_action( 'elementor/widgets/widgets_registered', $plugin_public, 'register_greenfox_product_list_widget' );
+
 
 	}
 
