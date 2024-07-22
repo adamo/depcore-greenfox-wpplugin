@@ -235,6 +235,33 @@ class Depcore_Greenfox_Admin
 			'options' => $this->get_contact_forms(),
 			'desc' => __('Select the form which will be used for the CTA', 'depcore-greenfox'),
 		));
+
+		$cmb = new_cmb2_box(array(
+			'id' 			=> $this->prefix . 'badges',
+			'title'         => __('Badges', 'depcore-greenfox'),
+			'object_types'  => array('greenfox-product'),
+			'context'       => 'side',
+			'priority'      => 'low',
+			'show_names'    => true,
+		));
+
+		$cmb->add_field(array(
+			'id' => $this->prefix . 'new_badge',
+			'desc' => __('New', 'depcore-greenfox'),
+			'type' => 'checkbox',
+		));
+
+		$cmb->add_field(array(
+			'id' => $this->prefix . 'on_special_order_badge',
+			'desc' => __('On special order', 'depcore-greenfox'),
+			'type' => 'checkbox',
+		));
+
+		$cmb->add_field(array(
+			'id' => $this->prefix . 'new_pizza_badge',
+			'desc' => __('New pizza baugettes', 'depcore-greenfox'),
+			'type' => 'checkbox',
+		));
 	}
 
 	protected function get_contact_forms()

@@ -149,3 +149,22 @@ article.hide {
     object-fit: cover;
     margin-bottom: 10px;
 }
+
+.badges {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: -30px;
+    max-width: 90vw;
+}
+
+.badges img {
+    height: 80px;
+    max-height: 10vh;
+    flex-basis: 33%;
+    max-width: 33vw;
+    object-fit: contain;
+}
+.qodef-portfolio-content {
+    max-width: 96vw;
+}
