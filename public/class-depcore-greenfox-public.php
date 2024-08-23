@@ -101,7 +101,8 @@ class Depcore_Greenfox_Public
 
 	public function add_itemprop_name($title)
 	{
-		return "<span itemprop='name'>$title</span>";
+		global $post;
+		return "<span itemprop='name'> {$post->post_title}</span>";
 	}
 
 	public function remove_wpseo()

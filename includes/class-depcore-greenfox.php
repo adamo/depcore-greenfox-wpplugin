@@ -27,7 +27,8 @@
  * @subpackage Depcore_Greenfox/includes
  * @author     Depcore <biuro@depcore.pl>
  */
-class Depcore_Greenfox {
+class Depcore_Greenfox
+{
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -66,8 +67,9 @@ class Depcore_Greenfox {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
-		if ( defined( 'DEPCORE_GREENFOX_VERSION' ) ) {
+	public function __construct()
+	{
+		if (defined('DEPCORE_GREENFOX_VERSION')) {
 			$this->version = DEPCORE_GREENFOX_VERSION;
 		} else {
 			$this->version = '1.0.0';
@@ -78,7 +80,6 @@ class Depcore_Greenfox {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -97,34 +98,34 @@ class Depcore_Greenfox {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function load_dependencies() {
+	private function load_dependencies()
+	{
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-depcore-greenfox-loader.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-depcore-greenfox-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-depcore-greenfox-i18n.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-depcore-greenfox-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-depcore-greenfox-admin.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-depcore-greenfox-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-depcore-greenfox-public.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-depcore-greenfox-public.php';
 
 		// require_once plugin_dir_path( dirname( __FILE__ )) . '/elementor/Greenfox_Product_List_Widget.php';
 		$this->loader = new Depcore_Greenfox_Loader();
-
 	}
 
 	/**
@@ -136,12 +137,12 @@ class Depcore_Greenfox {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function set_locale() {
+	private function set_locale()
+	{
 
 		$plugin_i18n = new Depcore_Greenfox_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
+		$this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
 	}
 
 	/**
@@ -151,17 +152,17 @@ class Depcore_Greenfox {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	private function define_admin_hooks()
+	{
 
-		$plugin_admin = new Depcore_Greenfox_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Depcore_Greenfox_Admin($this->get_plugin_name(), $this->get_version());
 
 		$this->loader->add_action('init', $plugin_admin, 'init_post_types');
 		$this->loader->add_action('cmb2_admin_init', $plugin_admin, 'init_metaboxes');
 
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 	}
 
 	/**
@@ -171,19 +172,20 @@ class Depcore_Greenfox {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function define_public_hooks()
+	{
 
-		$plugin_public = new Depcore_Greenfox_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Depcore_Greenfox_Public($this->get_plugin_name(), $this->get_version());
 
-		$this->loader->add_action( 'init', $plugin_public, 'register_shortcodes' );
+		$this->loader->add_action('init', $plugin_public, 'register_shortcodes');
 		$this->loader->add_filter('wp_get_attachment_image_attributes', $plugin_public, 'add_itemprop_image', 10, 5);
 		// $this->loader->add_filter('get_the_title', $plugin_public, 'add_itemprop_name', 10, 1);
 		// $this->loader->add_filter('the_title', $plugin_public, 'add_itemprop_name', 10, 1);
 		$this->loader->add_filter('stal_filter_page_title_text', $plugin_public, 'add_itemprop_name', 10, 1);
-		$this->loader->add_action( 'template_redirect', $plugin_public, 'remove_wpseo' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'init', $plugin_public, 'register_greenfox_product_list_shortcode' );
+		$this->loader->add_action('template_redirect', $plugin_public, 'remove_wpseo');
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+		$this->loader->add_action('init', $plugin_public, 'register_greenfox_product_list_shortcode');
 		// $this->loader->add_action( 'elementor/widgets/widgets_registered', $plugin_public, 'register_greenfox_product_list_widget' );
 
 
@@ -194,7 +196,8 @@ class Depcore_Greenfox {
 	 *
 	 * @since    1.0.0
 	 */
-	public function run() {
+	public function run()
+	{
 		$this->loader->run();
 	}
 
@@ -205,7 +208,8 @@ class Depcore_Greenfox {
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name() {
+	public function get_plugin_name()
+	{
 		return $this->plugin_name;
 	}
 
@@ -215,7 +219,8 @@ class Depcore_Greenfox {
 	 * @since     1.0.0
 	 * @return    Depcore_Greenfox_Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function get_loader() {
+	public function get_loader()
+	{
 		return $this->loader;
 	}
 
@@ -225,8 +230,8 @@ class Depcore_Greenfox {
 	 * @since     1.0.0
 	 * @return    string    The version number of the plugin.
 	 */
-	public function get_version() {
+	public function get_version()
+	{
 		return $this->version;
 	}
-
 }
