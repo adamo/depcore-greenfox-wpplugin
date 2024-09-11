@@ -179,6 +179,31 @@ class Depcore_Greenfox_Admin
 			$this->create_metabox_group($group_name, $fields);
 		}
 
+		// $cmb = new_cmb2_box(array(
+		// 	'id' 			=> $this->prefix . 'title_settings',
+		// 	'context'       => 'after_title',
+		// 	'priority'      => 'high',
+		// 	'object_types'  => array('greenfox-product'),
+		// ));
+
+		// $cmb->add_field(array(
+		// 	'id' => $this->prefix . 'h1',
+		// 	'name' => __('custom h1', 'depcore-greenfox'),
+		// 	'type' => 'text',
+
+
+		// ));
+
+		$cmb = new_cmb2_box(array(
+			'id' 			=> $this->prefix . 'product_gallery',
+			'title'         => __('Additional settings', 'depcore-greenfox'),
+			'object_types'  => array('greenfox-product'),
+			'context'       => 'side',
+			'priority'      => 'low',
+			'show_names'    => true,
+		));
+
+
 		$cmb = new_cmb2_box(array(
 			'id' 			=> $this->prefix . 'product_gallery',
 			'title'         => __('Additional settings', 'depcore-greenfox'),
